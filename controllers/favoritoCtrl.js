@@ -13,4 +13,31 @@ function prueba (req, res){
     res.status(200).send({message: 'Hola mundo '+ user})
 }
 
-module.exports = {prueba}
+function getFavorito(req,res){
+    var favoritoId = req.params.id;
+
+    res.status(200).send({data:favoritoId})
+}
+
+function getFavoritos(req,res){
+
+}
+
+function saveFavorito(req,res){
+    var params = req.body;
+
+    res.status(200).send({data:params})
+
+}
+
+
+function updateFavorito(req,res){
+
+}
+
+function deleteFavorito(req,res){
+
+}
+
+
+module.exports = {prueba, getFavorito, saveFavorito}

@@ -8,6 +8,8 @@ var api = express.Router();
 
 
 api.get("/prueba/:name?",favoritoController.prueba)
+api.get("/favorito/:id",favoritoController.getFavorito)
+api.post("/favorito",favoritoController.saveFavorito)
 
 
 module.exports = api
