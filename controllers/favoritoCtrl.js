@@ -32,12 +32,16 @@ function saveFavorito(req,res){
 
 
 function updateFavorito(req,res){
+    var params = req.body;
 
+    res.status(200).send({data:params})
 }
 
 function deleteFavorito(req,res){
+    var favoritoId = req.params.id;
 
+    res.status(200).send({data:favoritoId})
 }
 
 
-module.exports = {prueba, getFavorito, saveFavorito}
+module.exports = {prueba, getFavorito, saveFavorito, updateFavorito, deleteFavorito}
