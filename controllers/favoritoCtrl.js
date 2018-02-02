@@ -1,6 +1,7 @@
 'use strict'
 
 var favoritoModel = require('../models/favoritoModel');
+var moment = require('moment')
 
 function prueba (req, res){
 
@@ -16,13 +17,25 @@ function prueba (req, res){
 }
 
 function getFavorito(req,res){
-    var favoritoId = req.params.id;
+    var id = req.params.id;
 
-    res.status(200).send({data:favoritoId})
+    favoritoModel.findById(id,function(err,resp){
+        if(err){
+            res.status(500).send({message: "Error al devolver el marcador por id"})
+        }
+        else{
+            if(!resp){
+                res.status(400).send({message: "No hay marcadores con ese id"})
+            }else{
+                res.status(200).send({data:resp})
+            }
+        }
+    })
+
 }
 
 function getFavoritos(req,res){
-    favoritoModel.find({}).sort('-title').exec(function(err,resp){
+    favoritoModel.find({}).sort('-date').exec(function(err,resp){
         if(err){
             res.status(500).send({message: "Error al devolver los marcadores"})
         }
@@ -44,8 +57,10 @@ function saveFavorito(req,res){
     favorito.title= params.title;
     favorito.description = params.description;
     favorito.url = params.url;
+    favorito.date = moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
 
-    console.log(favorito)
+
+        console.log(favorito)
 
 
     favorito.save(function(err,resp){
