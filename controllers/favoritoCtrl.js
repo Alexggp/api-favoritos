@@ -49,6 +49,10 @@ function getFavoritos(req,res){
     })
 }
 
+
+
+
+
 function saveFavorito(req,res){
     var favorito = new favoritoModel();
 
@@ -79,9 +83,18 @@ function saveFavorito(req,res){
 
 
 function updateFavorito(req,res){
+    var id = req.params.id;
     var params = req.body;
 
-    res.status(200).send({data:params})
+
+    favoritoModel.findByIdAndUpdate(id, params, function(err,resp){
+        if(err){
+            res.status(500).send({message: "Error updating data"})
+        }
+        else{
+            res.status(200).send({data:resp})
+        }
+    })
 }
 
 function deleteFavorito(req,res){
