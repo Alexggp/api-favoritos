@@ -98,9 +98,25 @@ function updateFavorito(req,res){
 }
 
 function deleteFavorito(req,res){
-    var favoritoId = req.params.id;
-
-    res.status(200).send({data:favoritoId})
+    favoritoModel.find({}).sort('-date').exec(function(err,resp){
+        if(err){
+            res.status(500).send({message: "Error al devolver el marcador"});
+        }
+        else{
+            if(!resp.length){
+                res.status(400).send({message: "No existe el marcador"});
+            }else{
+                console.log('resp',favorito[0]);
+                resp[0].remove(function(err){
+                    if(err){
+                        res.status(500).send({message: "Error al eliminar el marcador"});
+                    }else{
+                        res.status(200).send({message: "Marcador eliminado"});
+                    }
+                })
+            }
+        }
+    })
 }
 
 
